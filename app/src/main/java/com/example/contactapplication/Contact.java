@@ -5,12 +5,12 @@ import android.net.Uri;
 import javax.inject.Inject;
 
 public class Contact{
-    private String id;
-    private String fullName;
-    private String contactNumber;
-    private String email;
-    private String companyInformation;
-    private Uri image;
+    private String id = null;
+    private String fullName = null;
+    private String contactNumber = null;
+    private String email = null;
+    private String companyInformation = null;
+    private Uri image = null;
 
     @Inject
     Contact(){

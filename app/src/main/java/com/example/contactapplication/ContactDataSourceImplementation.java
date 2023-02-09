@@ -144,8 +144,12 @@ public class ContactDataSourceImplementation implements ContactDataSource {
 
                 Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(id));
                 Uri photo = Uri.withAppendedPath(uri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
-                contact.setImage(photo);
-
+                if (photo == null) {
+                    // profile picture not set
+                } else {
+                    // profile picture set
+                    contact.setImage(photo);
+                }
                 contacts.add(contact);
             }
         }

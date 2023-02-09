@@ -38,6 +38,7 @@
                 android:layout_below="@+id/profile_pic"
                 android:layout_centerInParent="true"
                 android:text="Add picture"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
 
         </RelativeLayout>
@@ -79,18 +80,25 @@
                 android:layout_toRightOf="@+id/add_name_icon"
                 android:background="@drawable/input_style"
                 android:hint="First name"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="#7B8FA1" />
 
             <EditText
                 android:id="@+id/et_last_name"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/et_first_name"
-                android:layout_margin="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_toRightOf="@+id/add_name_icon"
                 android:background="@drawable/input_style"
                 android:hint="Last name"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="#7B8FA1" />
 
         </RelativeLayout>
 
@@ -133,7 +141,9 @@
                 android:background="@drawable/input_style"
                 android:hint="Phone"
                 android:inputType="number"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="#7B8FA1" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -174,7 +184,9 @@
                 android:layout_toRightOf="@+id/add_email_icon"
                 android:background="@drawable/input_style"
                 android:hint="Email"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="#7B8FA1" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -208,11 +220,16 @@
                 android:id="@+id/et_company"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_toRightOf="@+id/add_company_icon"
                 android:background="@drawable/input_style"
                 android:hint="Company"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="#7B8FA1" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -223,9 +240,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/company_info_section"
-        android:layout_marginTop="100dp"
-        android:elevation="8dp"
-        app:cardCornerRadius="20dp">
+        android:layout_marginTop="100dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
