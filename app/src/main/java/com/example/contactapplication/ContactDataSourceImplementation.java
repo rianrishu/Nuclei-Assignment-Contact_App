@@ -1,6 +1,7 @@
 package com.example.contactapplication;
 
 import android.annotation.SuppressLint;
+import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -30,41 +32,48 @@ public class ContactDataSourceImplementation implements ContactDataSource {
 
     @Override
     public Single<Long> saveContact(Contact contact) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(ContactsContract.Contacts.DISPLAY_NAME, contact.getFullName());
 
-        Uri uri = contentResolver.insert(ContactsContract.Contacts.CONTENT_URI, contentValues);
-        long contactId = ContentUris.parseId(uri);
+        long contactId = 22;
+        try {
 
-        //Adding the phone number
-        contentValues.clear();
-        contentValues.put(ContactsContract.CommonDataKinds.Phone.CONTACT_ID, contactId);
-        contentValues.put(ContactsContract.CommonDataKinds.Phone.NUMBER, contact.getContactNumber());
-        contentValues.put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_WORK);
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, contentValues);
-
-        //Adding email
-        contentValues.clear();
-        contentValues.put(ContactsContract.CommonDataKinds.Email.CONTACT_ID, contactId);
-        contentValues.put(ContactsContract.CommonDataKinds.Email.DATA, contact.getEmail());
-        contentValues.put(ContactsContract.CommonDataKinds.Email.TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK);
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, contentValues);
-
-        //Adding company information
-        contentValues.clear();
-        contentValues.put(ContactsContract.CommonDataKinds.Organization.CONTACT_ID, contactId);
-        contentValues.put(ContactsContract.CommonDataKinds.Organization.COMPANY, contact.getCompanyInformation());
-        contentValues.put(ContactsContract.CommonDataKinds.Organization.TYPE, ContactsContract.CommonDataKinds.Organization.TYPE_WORK);
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, contentValues);
-
-        if (contact.getImage() != null) {
-            contentValues.clear();
-            contentValues.put(ContactsContract.CommonDataKinds.Photo.CONTACT_ID, contactId);
-            contentValues.put(ContactsContract.CommonDataKinds.Photo.PHOTO, getByteArrayFromUri(contact.getImage()));
-            contentValues.put(ContactsContract.CommonDataKinds.Photo.MIMETYPE, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE);
+            ContentValues contentValues = new ContentValues();
+            Uri uri = contentResolver.insert(ContactsContract.Contacts.CONTENT_URI, contentValues);
+            contactId = ContentUris.parseId(uri);
+            contentValues.put(ContactsContract.Contacts.DISPLAY_NAME, contact.getFullName());
             contentResolver.insert(ContactsContract.Data.CONTENT_URI, contentValues);
-        }
 
+            //Adding the phone number
+//            contentValues.clear();
+//            contentValues.put(ContactsContract.CommonDataKinds.Phone.CONTACT_ID, contactId);
+//            contentValues.put(ContactsContract.CommonDataKinds.Phone.NUMBER, contact.getContactNumber());
+//            contentValues.put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_WORK);
+//            contentResolver.insert(ContactsContract.Data.CONTENT_URI, contentValues);
+//
+//            //Adding email
+//            contentValues.clear();
+//            contentValues.put(ContactsContract.CommonDataKinds.Email.CONTACT_ID, contactId);
+//            contentValues.put(ContactsContract.CommonDataKinds.Email.DATA, contact.getEmail());
+//            contentValues.put(ContactsContract.CommonDataKinds.Email.TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK);
+//            contentResolver.insert(ContactsContract.Data.CONTENT_URI, contentValues);
+//
+//            //Adding company information
+//            contentValues.clear();
+//            contentValues.put(ContactsContract.CommonDataKinds.Organization.CONTACT_ID, contactId);
+//            contentValues.put(ContactsContract.CommonDataKinds.Organization.COMPANY, contact.getCompanyInformation());
+//            contentValues.put(ContactsContract.CommonDataKinds.Organization.TYPE, ContactsContract.CommonDataKinds.Organization.TYPE_WORK);
+//            contentResolver.insert(ContactsContract.Data.CONTENT_URI, contentValues);
+
+            //        if (contact.getImage() != null) {
+            //            contentValues.clear();
+            //            contentValues.put(ContactsContract.CommonDataKinds.Photo.CONTACT_ID, contactId);
+            //            contentValues.put(ContactsContract.CommonDataKinds.Photo.PHOTO, getByteArrayFromUri(contact.getImage()));
+            //            contentValues.put(ContactsContract.CommonDataKinds.Photo.MIMETYPE, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE);
+            //            contentResolver.insert(ContactsContract.Data.CONTENT_URI, contentValues);
+            //        }
+        } catch (UnsupportedOperationException e) {
+            // Handle the exception by logging the error message
+            Log.e("error in saving contact", e.getMessage());
+        }
         return Single.just(contactId);
     }
 
@@ -83,7 +92,6 @@ public class ContactDataSourceImplementation implements ContactDataSource {
             return null;
         }
     }
-
 
 
     @SuppressLint("Range")

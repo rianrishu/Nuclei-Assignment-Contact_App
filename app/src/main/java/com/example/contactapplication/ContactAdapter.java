@@ -55,12 +55,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         public void bind(Contact contact) {
             nameTextView.setText(contact.getFullName());
             phoneNumberTextView.setText(contact.getContactNumber());
-            Log.d("imagexyz1234abcd", contact.getImage().toString());
             if (contact.getImage() != null) {
                 imageView.setImageURI(contact.getImage());
             }
         }
-
     }
-
 }
