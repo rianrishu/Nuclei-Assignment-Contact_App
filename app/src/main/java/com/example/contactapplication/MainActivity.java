@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private void getContacts(ActivityMainBinding activityMainBinding, Bundle savedInstanceState){
         router = Conductor.attachRouter(this, activityMainBinding.controllerContainer, savedInstanceState);
         if (!router.hasRootController()) {
-            router.setRoot(RouterTransaction.with(new ContactController()));
+            router.setRoot(RouterTransaction.with(new ContactController(router)));
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.contactapplication.displayContactList;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluelinelabs.conductor.Controller;
+import com.bluelinelabs.conductor.Router;
 import com.example.contactapplication.Contact;
 import com.example.contactapplication.ContactDataSourceComponent;
 import com.example.contactapplication.DaggerContactDataSourceComponent;
@@ -31,6 +33,15 @@ public class ContactController extends Controller {
     ContactDataSourceComponent component = DaggerContactDataSourceComponent.builder().build();
 
     private final CompositeDisposable disposable = new CompositeDisposable();
+    private Router router;
+
+    public ContactController() {
+
+    }
+    public ContactController(Router router) {
+        this.router = router;
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -68,7 +79,7 @@ public class ContactController extends Controller {
 
     private void displayContacts() {
         RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
-        ContactAdapter adapter = new ContactAdapter(contact_list);
+        ContactAdapter adapter = new ContactAdapter(contact_list, router);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }

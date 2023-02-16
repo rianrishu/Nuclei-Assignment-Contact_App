@@ -1,19 +1,13 @@
 package com.example.contactapplication.displayContactDetails;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,11 +16,7 @@ import com.bluelinelabs.conductor.Controller;
 import com.example.contactapplication.Contact;
 import com.example.contactapplication.ContactDataSourceComponent;
 import com.example.contactapplication.DaggerContactDataSourceComponent;
-import com.example.contactapplication.MainActivity;
 import com.example.contactapplication.R;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
@@ -41,7 +31,17 @@ public class ContactDisplayDetailsController extends Controller {
     private ImageView imageView;
     private Button editbtn;
     private Button deletebtn;
+
+    private Contact contact;
     private final CompositeDisposable disposable = new CompositeDisposable();
+
+    public ContactDisplayDetailsController() {
+
+    }
+
+    public ContactDisplayDetailsController(Contact contact) {
+        this.contact = contact;
+    }
 
     @NonNull
     @Override
@@ -63,7 +63,10 @@ public class ContactDisplayDetailsController extends Controller {
     }
 
     private void attachListeners() {
-
+        name.setText(contact.getFullName());
+        phoneNumber.setText(contact.getContactNumber());
+        email.setText(contact.getEmail());
+        company.setText(contact.getCompanyInformation());
     }
 
     @Override
