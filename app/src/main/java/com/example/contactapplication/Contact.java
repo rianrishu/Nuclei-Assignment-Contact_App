@@ -13,7 +13,7 @@ public class Contact{
     private Uri image = null;
 
     @Inject
-    Contact(){
+    public Contact(){
 
     }
 
@@ -26,50 +26,50 @@ public class Contact{
         this.image = image;
     }
 
-    void setId(String id){
+    public void setId(String id){
         this.id = id;
     }
-    void setFullName(String fullName) {
+    public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
-    void setContactNumber(String contactNumber) {
+    public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
 
-    void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    void setCompanyInformation(String companyInformation) {
+    public void setCompanyInformation(String companyInformation) {
         this.companyInformation = companyInformation;
     }
 
-    void setImage(Uri image) {
+    public void setImage(Uri image) {
         this.image = image;
     }
 
-    String getFullName(){
+    public String getFullName(){
         return this.fullName;
     }
 
-    String getContactNumber(){
+    public String getContactNumber(){
         return this.contactNumber;
     }
 
-    String getEmail(){
+    public String getEmail(){
         return this.email;
     }
 
-    String getCompanyInformation(){
+    public String getCompanyInformation(){
         return this.companyInformation;
     }
 
-    Uri getImage(){
+    public Uri getImage(){
         return this.image;
     }
 
-    String getId(){
+    public String getId(){
         return this.id;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.contactapplication;
+package com.example.contactapplication.displayContactList;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluelinelabs.conductor.Controller;
+import com.example.contactapplication.Contact;
+import com.example.contactapplication.ContactDataSourceComponent;
+import com.example.contactapplication.DaggerContactDataSourceComponent;
+import com.example.contactapplication.R;
+import com.example.contactapplication.displayContactList.ContactAdapter;
 
 import java.util.List;
 

@@ -1,14 +1,17 @@
-package com.example.contactapplication;
+package com.example.contactapplication.displayContactList;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.contactapplication.Contact;
+import com.example.contactapplication.R;
 
 import java.util.List;
 
@@ -32,6 +35,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Contact contact = contacts.get(position);
         holder.bind(contact);
+        holder.itemView.setOnClickListener(view -> {
+            Toast.makeText(view.getContext(), contact.getFullName(), Toast.LENGTH_SHORT).show();
+            router.
+
+        });
     }
 
     @Override
