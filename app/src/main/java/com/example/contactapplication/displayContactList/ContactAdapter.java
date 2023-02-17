@@ -21,11 +21,11 @@ import java.util.List;
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
 
     private List<Contact> contacts;
-    private Router router;
+    private ContactController.ContactListener listener;
 
-    public ContactAdapter(List<Contact> contacts, Router router) {
-        this.router = router;
+    public ContactAdapter(List<Contact> contacts, ContactController.ContactListener listener) {
         this.contacts = contacts;
+        this.listener = listener;
     }
 
     @NonNull
@@ -41,9 +41,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         Contact contact = contacts.get(position);
         holder.bind(contact);
         holder.itemView.setOnClickListener(view -> {
-            Toast.makeText(view.getContext(), contact.getFullName(), Toast.LENGTH_SHORT).show();
-            router.setRoot(RouterTransaction.with(new ContactDisplayDetailsController(contact)));
-
+            listener.openEditContact(contact);
         });
     }
 

@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluelinelabs.conductor.Controller;
 import com.bluelinelabs.conductor.Router;
+import com.bluelinelabs.conductor.RouterTransaction;
 import com.example.contactapplication.Contact;
 import com.example.contactapplication.ContactDataSourceComponent;
 import com.example.contactapplication.DaggerContactDataSourceComponent;
 import com.example.contactapplication.R;
+import com.example.contactapplication.displayContactDetails.ContactDisplayDetailsController;
 import com.example.contactapplication.displayContactList.ContactAdapter;
 
 import java.util.List;
@@ -33,14 +35,11 @@ public class ContactController extends Controller {
     ContactDataSourceComponent component = DaggerContactDataSourceComponent.builder().build();
 
     private final CompositeDisposable disposable = new CompositeDisposable();
-    private Router router;
 
     public ContactController() {
 
     }
-    public ContactController(Router router) {
-        this.router = router;
-    }
+
 
 
     @Override
@@ -72,17 +71,24 @@ public class ContactController extends Controller {
                             this.contact_list = contact;
                             displayContacts();
                         }, throwable -> {
-                            Log.d("Error", "error in fetchContacts");
+
                         })
         );
     }
 
     private void displayContacts() {
         RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
-        ContactAdapter adapter = new ContactAdapter(contact_list, router);
+        ContactAdapter adapter = new ContactAdapter(contact_list, contact ->
+                getRouter().pushController(RouterTransaction.with(new ContactDisplayDetailsController(contact))));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
+    interface ContactListener{
+        void openEditContact(Contact contact);
+    }
+
 }
+
+
 

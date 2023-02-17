@@ -1,16 +1,11 @@
-package com.example.contactapplication.addNewContact;
-
-import static android.app.Activity.RESULT_OK;
+package com.example.contactapplication.displayContactDetails;
 
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,66 +25,68 @@ import com.example.contactapplication.DaggerContactDataSourceComponent;
 import com.example.contactapplication.MainActivity;
 import com.example.contactapplication.R;
 
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
-
-import android.app.Activity;
-import android.widget.Toast;
-
-import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ContactAddNewContactController extends Controller {
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
+public class ContactEditDetailsController extends Controller {
     ContactDataSourceComponent component = DaggerContactDataSourceComponent.builder().build();
-    private EditText firstname;
-    private EditText lastname;
+    private EditText name;
     private EditText phoneNumber;
     private EditText email;
     private EditText company;
     private ImageView imageView;
     private Button savebtn;
-    private TextView addPicture;
+
+    private Contact contact;
     private final CompositeDisposable disposable = new CompositeDisposable();
+
+    public ContactEditDetailsController() {
+
+    }
+
+    public ContactEditDetailsController(Contact contact) {
+        this.contact = contact;
+    }
 
     @NonNull
     @Override
     protected View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @Nullable Bundle savedViewState) {
-        View view = inflater.inflate(R.layout.activity_add_new_contact, container, false);
+        View view = inflater.inflate(R.layout.activity_edit_contact_details, container, false);
         initializeView(view);
         attachListeners();
         return view;
     }
 
     private void initializeView(View view) {
-        firstname = view.findViewById(R.id.et_first_name);
-        lastname = view.findViewById(R.id.et_last_name);
+        name = view.findViewById(R.id.et_name);
         phoneNumber = view.findViewById(R.id.et_contact_number);
         email = view.findViewById(R.id.et_email);
         company = view.findViewById(R.id.et_company);
         imageView = view.findViewById(R.id.profile_pic);
         savebtn = view.findViewById(R.id.btn_save_contact);
-        addPicture = view.findViewById(R.id.tv_add_picture);
     }
 
     private void attachListeners() {
-        Contact contact = new Contact();
+        name.setText(contact.getFullName());
+        phoneNumber.setText(contact.getContactNumber());
+        email.setText(contact.getEmail());
+        company.setText(contact.getCompanyInformation());
 
-        imageView.setOnClickListener(v -> {
-            Intent pickImageIntent = new Intent(Intent.ACTION_PICK,
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-            startActivityForResult(pickImageIntent, 1);
-        });
-
-        savebtn.setOnClickListener(v -> {
-
-            String st_fullname = firstname.getText().toString() + " " + lastname.getText().toString();
+        savebtn.setOnClickListener(view -> {
+//            contact.setFullName(name.getText().toString());
+//            contact.setContactNumber(phoneNumber.getText().toString());
+//            contact.setEmail(email.getText().toString());
+//            contact.setCompanyInformation(company.getText().toString());
+//            component.get(getApplicationContext()).updateContact(contact);
+//            getRouter().popCurrentController();
+            String st_name = name.getText().toString();
             String st_phoneNumber = phoneNumber.getText().toString();
             String st_email = email.getText().toString();
             String st_companyInfo = company.getText().toString();
 
-            if (st_fullname.length() == 1) {
+            if (st_name.length() == 0) {
                 Toast.makeText(getActivity(), "Name field is empty", Toast.LENGTH_SHORT).show();
             } else if (st_phoneNumber.length() != 10) {
                 Toast.makeText(getActivity(), "Phone number invalid", Toast.LENGTH_SHORT).show();
@@ -97,19 +95,28 @@ public class ContactAddNewContactController extends Controller {
             } else if (st_companyInfo.length() == 0) {
                 Toast.makeText(getActivity(), "Company field is empty", Toast.LENGTH_SHORT).show();
             } else {
-                contact.setFullName(st_fullname);
+                contact.setFullName(st_name);
                 contact.setContactNumber(st_phoneNumber);
                 contact.setEmail(st_email);
                 contact.setCompanyInformation(st_companyInfo);
 
-                Intent contactIntent = new Intent(ContactsContract.Intents.Insert.ACTION);
-                contactIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
-                contactIntent
-                        .putExtra(ContactsContract.Intents.Insert.NAME, contact.getFullName())
-                        .putExtra(ContactsContract.Intents.Insert.PHONE, contact.getContactNumber())
-                        .putExtra(ContactsContract.Intents.Insert.EMAIL, contact.getEmail())
-                        .putExtra(ContactsContract.Intents.Insert.COMPANY, contact.getCompanyInformation());
-                startActivityForResult(contactIntent, 2);
+//                Intent contactIntent = new Intent(ContactsContract.Intents.Insert.ACTION);
+//                contactIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+//                contactIntent
+//                        .putExtra(ContactsContract.Intents.Insert.NAME, contact.getFullName())
+//                        .putExtra(ContactsContract.Intents.Insert.PHONE, contact.getContactNumber())
+//                        .putExtra(ContactsContract.Intents.Insert.EMAIL, contact.getEmail())
+//                        .putExtra(ContactsContract.Intents.Insert.COMPANY, contact.getCompanyInformation());
+//                startActivityForResult(contactIntent, 1);
+
+                Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contact.getId()));
+
+// Create an Intent to open the contact edit screen
+                Intent intent = new Intent(Intent.ACTION_EDIT);
+                intent.setData(contactUri);
+
+// Start the Contacts app to edit the contact
+                startActivity(intent);
             }
         });
     }
@@ -127,33 +134,20 @@ public class ContactAddNewContactController extends Controller {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                Uri selectedImage = data.getData();
-                imageView.setImageURI(selectedImage);
-                addPicture.setVisibility(View.GONE);
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getActivity(), "Cancelled add photo",
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getActivity(), "cannot load image", Toast.LENGTH_SHORT).show();
-            }
-        }
-        if (requestCode == 2) {
-            if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(getActivity(), "Contact has been added.", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(getActivity(), MainActivity.class);
-                startActivity(i);
+                Toast.makeText(getActivity(), "Contact has been updated.", Toast.LENGTH_SHORT).show();
+                getRouter().popCurrentController();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getActivity(), "Cancelled Added Contact",
+                Toast.makeText(getActivity(), "Cancelled update Contact",
                         Toast.LENGTH_SHORT).show();
             }
         }
     }
+
 
     @Override
     protected void onDestroy() {
         disposable.clear();
         super.onDestroy();
     }
-
 }

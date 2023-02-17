@@ -110,6 +110,7 @@ public class ContactDataSourceImplementation implements ContactDataSource {
                 String company = "";
                 byte[] image = null;
                 Contact contact = new Contact();
+                contact.setId(id);
                 contact.setFullName(name);
 
                 Cursor phoneCursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,

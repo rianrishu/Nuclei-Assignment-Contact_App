@@ -45,20 +45,10 @@ public class MainActivity extends AppCompatActivity {
 //        });
     }
 
-
-    //TODO : Fix problem with restart main activity
-    @Override
-    public void onBackPressed() {
-        if (!router.handleBack()) {
-            super.onBackPressed();
-            router.getActivity();
-        }
-    }
-
     private void getContacts(ActivityMainBinding activityMainBinding, Bundle savedInstanceState){
         router = Conductor.attachRouter(this, activityMainBinding.controllerContainer, savedInstanceState);
         if (!router.hasRootController()) {
-            router.setRoot(RouterTransaction.with(new ContactController(router)));
+            router.setRoot(RouterTransaction.with(new ContactController()));
         }
     }
 

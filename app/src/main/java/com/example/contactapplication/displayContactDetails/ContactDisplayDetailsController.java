@@ -1,6 +1,10 @@
 package com.example.contactapplication.displayContactDetails;
 
+import android.content.ContentUris;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bluelinelabs.conductor.Controller;
+import com.bluelinelabs.conductor.RouterTransaction;
 import com.example.contactapplication.Contact;
 import com.example.contactapplication.ContactDataSourceComponent;
 import com.example.contactapplication.DaggerContactDataSourceComponent;
@@ -21,7 +26,6 @@ import com.example.contactapplication.R;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class ContactDisplayDetailsController extends Controller {
-
 
     ContactDataSourceComponent component = DaggerContactDataSourceComponent.builder().build();
     private TextView name;
@@ -67,6 +71,18 @@ public class ContactDisplayDetailsController extends Controller {
         phoneNumber.setText(contact.getContactNumber());
         email.setText(contact.getEmail());
         company.setText(contact.getCompanyInformation());
+        imageView.setImageURI(contact.getImage());
+
+        editbtn.setOnClickListener(view -> {
+            Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contact.getId()));
+            Intent intent = new Intent(Intent.ACTION_EDIT);
+            intent.setData(contactUri);
+            startActivity(intent);
+        });
+
+        deletebtn.setOnClickListener(view -> {
+            component.get(getApplicationContext()).deleteContact(contact);
+        });
     }
 
     @Override
@@ -74,5 +90,6 @@ public class ContactDisplayDetailsController extends Controller {
         disposable.clear();
         super.onDestroy();
     }
+
 
 }
