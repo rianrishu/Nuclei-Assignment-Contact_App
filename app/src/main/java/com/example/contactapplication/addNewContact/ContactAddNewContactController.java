@@ -1,16 +1,11 @@
 package com.example.contactapplication.addNewContact;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,14 +26,12 @@ import com.example.contactapplication.R;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
-import android.app.Activity;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ContactAddNewContactController extends Controller {
+public class ContactAddNewContactController extends Controller implements MainActivity.OnBackPressedListener {
 
     ContactDataSourceComponent component = DaggerContactDataSourceComponent.builder().build();
     private EditText firstname;
@@ -140,8 +133,7 @@ public class ContactAddNewContactController extends Controller {
         if (requestCode == 2) {
             if (resultCode == Activity.RESULT_OK) {
                 Toast.makeText(getActivity(), "Contact has been added.", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(getActivity(), MainActivity.class);
-                startActivity(i);
+                getRouter().popCurrentController();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(getActivity(), "Cancelled Added Contact",
@@ -156,4 +148,9 @@ public class ContactAddNewContactController extends Controller {
         super.onDestroy();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        getRouter().popToRoot();
+    }
 }

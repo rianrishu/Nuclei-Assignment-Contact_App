@@ -38,11 +38,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(activityMainBinding.getRoot());
 
         requestPermissions(activityMainBinding, savedInstanceState);
-
-//        activityMainBinding.getRoot().findViewById(R.id.create_new_contact_section).setOnClickListener(view -> {
-//            findViewById(R.id.create_new_contact_section).setVisibility(View.GONE);
-//            router.pushController(RouterTransaction.with(new ContactAddNewContactController()));
-//        });
     }
 
     private void getContacts(ActivityMainBinding activityMainBinding, Bundle savedInstanceState){
@@ -103,5 +98,11 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.show();
     }
+
+    public interface OnBackPressedListener{
+        public void onBackPressed();
+    }
+
+
 
 }
