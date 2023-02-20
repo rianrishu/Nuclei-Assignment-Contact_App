@@ -1,8 +1,6 @@
 package com.example.contactapplication.displayContactList;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bluelinelabs.conductor.Controller;
-import com.bluelinelabs.conductor.Router;
 import com.bluelinelabs.conductor.RouterTransaction;
 import com.example.contactapplication.Contact;
 import com.example.contactapplication.ContactDataSourceComponent;
 import com.example.contactapplication.DaggerContactDataSourceComponent;
 import com.example.contactapplication.R;
+import com.example.contactapplication.addNewContact.ContactAddNewContactController;
 import com.example.contactapplication.displayContactDetails.ContactDisplayDetailsController;
-import com.example.contactapplication.displayContactList.ContactAdapter;
 
 import java.util.List;
 
@@ -40,8 +37,6 @@ public class ContactController extends Controller {
 
     }
 
-
-
     @Override
     protected void onDestroy() {
         disposable.clear();
@@ -51,13 +46,13 @@ public class ContactController extends Controller {
     @NonNull
     @Override
     protected View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @Nullable Bundle savedViewState) {
-        View view = inflater.inflate(R.layout.controller_container, container, false);
-        return view;
+        return inflater.inflate(R.layout.controller_container, container, false);
     }
 
     @Override
     protected void onAttach(@NonNull View view) {
         super.onAttach(view);
+        view.findViewById(R.id.create_new_contact_section).setOnClickListener(view1 -> getRouter().pushController(RouterTransaction.with(new ContactAddNewContactController())));
         fetchContacts();
     }
 
@@ -77,6 +72,7 @@ public class ContactController extends Controller {
     }
 
     private void displayContacts() {
+        assert getView() != null;
         RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
         ContactAdapter adapter = new ContactAdapter(contact_list, contact ->
                 getRouter().pushController(RouterTransaction.with(new ContactDisplayDetailsController(contact))));
@@ -84,7 +80,7 @@ public class ContactController extends Controller {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    interface ContactListener{
+    interface ContactListener {
         void openEditContact(Contact contact);
     }
 

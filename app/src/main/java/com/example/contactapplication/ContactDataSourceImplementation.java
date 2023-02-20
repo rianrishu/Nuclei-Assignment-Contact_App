@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -179,10 +180,18 @@ public class ContactDataSourceImplementation implements ContactDataSource {
 
     @Override
     public Completable deleteContact(Contact contact) {
-        String where = ContactsContract.Contacts._ID + " = ?";
-        String[] args = {contact.getId()};
+        Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contact.getId()));
 
-        int result = contentResolver.delete(ContactsContract.Contacts.CONTENT_URI, where, args);
+        // Delete the contact
+        int rowsDeleted = contentResolver.delete(uri, null, null);
+
+        // Check if the contact was successfully deleted
+        if (rowsDeleted == 1) {
+            // The contact was successfully deleted
+
+        } else {
+            // The contact was not found or could not be deleted for some other reason
+        }
         return Completable.complete();
     }
 }

@@ -2,6 +2,7 @@ package com.example.contactapplication;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
@@ -40,13 +41,12 @@ public class MainActivity extends AppCompatActivity {
         requestPermissions(activityMainBinding, savedInstanceState);
     }
 
-    private void getContacts(ActivityMainBinding activityMainBinding, Bundle savedInstanceState){
+    private void getContacts(ActivityMainBinding activityMainBinding, Bundle savedInstanceState) {
         router = Conductor.attachRouter(this, activityMainBinding.controllerContainer, savedInstanceState);
         if (!router.hasRootController()) {
             router.setRoot(RouterTransaction.with(new ContactController()));
         }
     }
-
 
 
     private void requestPermissions(ActivityMainBinding activityMainBinding, Bundle savedInstanceState) {
@@ -59,11 +59,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                         if (multiplePermissionsReport.areAllPermissionsGranted()) {
                             getContacts(activityMainBinding, savedInstanceState);
-
-                            activityMainBinding.getRoot().findViewById(R.id.create_new_contact_section).setOnClickListener(view -> {
-                                findViewById(R.id.create_new_contact_section).setVisibility(View.GONE);
-                                router.pushController(RouterTransaction.with(new ContactAddNewContactController()));
-                            });
                         }
                         if (multiplePermissionsReport.isAnyPermissionPermanentlyDenied()) {
                             showSettingsDialog();
@@ -99,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public interface OnBackPressedListener{
-        public void onBackPressed();
+    @Override
+    public void onBackPressed() {
+        if (!router.handleBack()) {
+            super.onBackPressed();
+        }
     }
-
-
-
 }

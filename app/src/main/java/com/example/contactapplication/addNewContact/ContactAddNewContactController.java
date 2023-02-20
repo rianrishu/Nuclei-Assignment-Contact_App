@@ -2,6 +2,10 @@ package com.example.contactapplication.addNewContact;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -28,10 +32,13 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ContactAddNewContactController extends Controller implements MainActivity.OnBackPressedListener {
+public class ContactAddNewContactController extends Controller {
 
     ContactDataSourceComponent component = DaggerContactDataSourceComponent.builder().build();
     private EditText firstname;
@@ -95,6 +102,13 @@ public class ContactAddNewContactController extends Controller implements MainAc
                 contact.setEmail(st_email);
                 contact.setCompanyInformation(st_companyInfo);
 
+
+                Drawable drawable = imageView.getDrawable();
+                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                String bitmapPath = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), bitmap, "title", null);
+                Uri bitmapUri = Uri.parse(bitmapPath);
+                contact.setImage(bitmapUri);
+
                 Intent contactIntent = new Intent(ContactsContract.Intents.Insert.ACTION);
                 contactIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
                 contactIntent
@@ -102,9 +116,46 @@ public class ContactAddNewContactController extends Controller implements MainAc
                         .putExtra(ContactsContract.Intents.Insert.PHONE, contact.getContactNumber())
                         .putExtra(ContactsContract.Intents.Insert.EMAIL, contact.getEmail())
                         .putExtra(ContactsContract.Intents.Insert.COMPANY, contact.getCompanyInformation());
+
+                Uri profilePictureUri = contact.getImage();
+                if (profilePictureUri != null) {
+                    try {
+                        InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(profilePictureUri);
+                        Bitmap profilePicture = BitmapFactory.decodeStream(inputStream);
+                        if (profilePicture != null) {
+
+                            byte[] byteArray = compressToSize(profilePicture, 100);
+                            contactIntent.putExtra(ContactsContract.CommonDataKinds.Photo.PHOTO, byteArray);
+                        }
+                    } catch (IOException e) {
+                    }
+                }
                 startActivityForResult(contactIntent, 2);
             }
         });
+    }
+
+    public static byte[] compressToSize(Bitmap bitmap, long targetFileSize) {
+        int quality = 100;
+        int retryCount = 0;
+        byte[] byteArray = null;
+
+        do {
+            try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOutputStream);
+                byteArray = byteArrayOutputStream.toByteArray();
+                quality -= 10;
+            } catch (IOException e) {
+
+            }
+
+            if (byteArray.length <= targetFileSize) {
+                break;
+            }
+
+            retryCount++;
+        } while (retryCount < 10);
+        return byteArray;
     }
 
     private boolean validateEmail(String email) {
@@ -148,9 +199,4 @@ public class ContactAddNewContactController extends Controller implements MainAc
         super.onDestroy();
     }
 
-
-    @Override
-    public void onBackPressed() {
-        getRouter().popToRoot();
-    }
 }

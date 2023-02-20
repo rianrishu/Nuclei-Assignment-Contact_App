@@ -5,19 +5,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bluelinelabs.conductor.Controller;
-import com.bluelinelabs.conductor.RouterTransaction;
 import com.example.contactapplication.Contact;
 import com.example.contactapplication.ContactDataSourceComponent;
 import com.example.contactapplication.DaggerContactDataSourceComponent;
@@ -82,6 +81,8 @@ public class ContactDisplayDetailsController extends Controller {
 
         deletebtn.setOnClickListener(view -> {
             component.get(getApplicationContext()).deleteContact(contact);
+            Toast.makeText(getApplicationContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+            getRouter().popCurrentController();
         });
     }
 
