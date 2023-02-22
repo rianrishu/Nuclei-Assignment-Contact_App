@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
     android:padding="30dp">
 
     <com.google.android.material.card.MaterialCardView
@@ -19,17 +18,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/profile_pic"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profile_pic_container"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/default_avatar"
-                android:text="Add a picture"
-                android:textColor="#fff"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                tools:ignore="DuplicateIds" />
+                android:layout_margin="15dp"
+                android:shape="ring"
+                app:cardCornerRadius="200dp">
+
+                <ImageView
+                    android:id="@+id/profile_pic"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:padding="0dp"
+                    android:src="@drawable/default_avatar" />
+
+            </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
 
@@ -69,10 +76,10 @@
                 android:layout_marginBottom="5dp"
                 android:layout_toRightOf="@+id/add_name_icon"
                 android:hint="Not set"
-                android:textSize="18dp"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="#7B8FA1" />
+                android:textColorHint="#7B8FA1"
+                android:textSize="18dp" />
 
         </RelativeLayout>
 
@@ -113,10 +120,10 @@
                 android:layout_marginBottom="5dp"
                 android:layout_toRightOf="@+id/add_number_icon"
                 android:hint="Not set"
-                android:textSize="18dp"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="#7B8FA1" />
+                android:textColorHint="#7B8FA1"
+                android:textSize="18dp" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -156,10 +163,10 @@
                 android:layout_marginBottom="5dp"
                 android:layout_toRightOf="@+id/add_email_icon"
                 android:hint="Not set"
-                android:textSize="18dp"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="#7B8FA1" />
+                android:textColorHint="#7B8FA1"
+                android:textSize="18dp" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -199,43 +206,36 @@
                 android:layout_marginBottom="5dp"
                 android:layout_toRightOf="@+id/add_company_icon"
                 android:hint="Not set"
-                android:textSize="18dp"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="#7B8FA1" />
+                android:textColorHint="#7B8FA1"
+                android:textSize="18dp" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/save_contact_section"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/company_info_section"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="100dp"
+        android:gravity="center">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
+        <Button
+            android:id="@+id/btn_edit_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#03C988"
+            android:text="edit" />
 
-            <Button
-                android:id="@+id/btn_edit_contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#03C988"
-                android:text="edit" />
+        <Button
+            android:id="@+id/btn_delete_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/btn_edit_contact"
+            android:backgroundTint="#FF0032"
+            android:text="delete" />
 
-            <Button
-                android:id="@+id/btn_delete_contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/btn_edit_contact"
-                android:backgroundTint="#FF0032"
-                android:text="delete" />
-
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
 </RelativeLayout>

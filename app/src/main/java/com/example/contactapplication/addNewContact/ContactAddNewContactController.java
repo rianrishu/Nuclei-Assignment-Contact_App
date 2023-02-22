@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,18 +119,29 @@ public class ContactAddNewContactController extends Controller {
                         .putExtra(ContactsContract.Intents.Insert.COMPANY, contact.getCompanyInformation());
 
                 Uri profilePictureUri = contact.getImage();
+                String TAG = "profilepic";
                 if (profilePictureUri != null) {
                     try {
                         InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(profilePictureUri);
                         Bitmap profilePicture = BitmapFactory.decodeStream(inputStream);
                         if (profilePicture != null) {
-
-                            byte[] byteArray = compressToSize(profilePicture, 100);
-                            contactIntent.putExtra(ContactsContract.CommonDataKinds.Photo.PHOTO, byteArray);
+                            byte[] byteArray = compressToSize(profilePicture, 200);
+                            if (byteArray != null) {
+                                contactIntent.putExtra(ContactsContract.CommonDataKinds.Photo.PHOTO, byteArray);
+                                Log.d(TAG, "Successfully added photo to contact intent.");
+                            } else {
+                                Log.e(TAG, "Failed to compress profile picture.");
+                            }
+                        } else {
+                            Log.e(TAG, "Failed to decode profile picture.");
                         }
                     } catch (IOException e) {
+                        Log.e(TAG, "Error opening profile picture input stream: " + e.getMessage());
                     }
+                } else {
+                    Log.d(TAG, "Profile picture is null.");
                 }
+
                 startActivityForResult(contactIntent, 2);
             }
         });

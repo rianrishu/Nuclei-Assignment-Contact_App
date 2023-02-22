@@ -91,6 +91,4 @@ public class ContactDisplayDetailsController extends Controller {
         disposable.clear();
         super.onDestroy();
     }
-
-
 }

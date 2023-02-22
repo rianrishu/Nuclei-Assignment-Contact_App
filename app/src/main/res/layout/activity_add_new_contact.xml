@@ -1,269 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
     android:padding="30dp">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/profile_pic_section"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:backgroundTint="#ECF9FF"
-        android:elevation="8dp"
-        app:cardCornerRadius="20dp">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/profile_pic_section"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="200dp"
+            android:backgroundTint="#ECF9FF"
+            android:elevation="8dp"
+            app:cardCornerRadius="20dp">
 
-            <ImageView
-                android:id="@+id/profile_pic"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/baseline_add_a_photo"
-                android:text="Add a picture"
-                android:textColor="#fff"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                tools:ignore="DuplicateIds" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_pic"
-                android:layout_centerInParent="true"
-                android:text="Add picture"
-                android:id="@+id/tv_add_picture"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/profile_pic_container"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="15dp"
+                    android:shape="ring"
+                    app:cardCornerRadius="200dp">
 
-        </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/profile_pic"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="15dp"
+                        android:padding="0dp"
+                        android:src="@drawable/default_avatar" />
 
-    </com.google.android.material.card.MaterialCardView>
+                </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/name_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_pic_section"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#ECF9FF"
-        android:elevation="8dp"
-        app:cardCornerRadius="20dp">
+                <TextView
+                    android:id="@+id/tv_add_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_pic_container"
+                    android:layout_centerInParent="true"
+                    android:text="Add picture"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
 
-        <RelativeLayout
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/name_section"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_pic_section"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#ECF9FF"
+            android:elevation="8dp"
+            app:cardCornerRadius="20dp">
 
-            <ImageView
-                android:id="@+id/add_name_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/contact_name" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/et_first_name"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@+id/add_name_icon"
-                android:background="@drawable/input_style"
-                android:hint="First name"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="#7B8FA1" />
+                <ImageView
+                    android:id="@+id/add_name_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/contact_name" />
 
-            <EditText
-                android:id="@+id/et_last_name"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/et_first_name"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@+id/add_name_icon"
-                android:background="@drawable/input_style"
-                android:hint="Last name"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="#7B8FA1" />
+                <EditText
+                    android:id="@+id/et_first_name"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/add_name_icon"
+                    android:background="@drawable/input_style"
+                    android:hint="First name"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#7B8FA1" />
 
-        </RelativeLayout>
+                <EditText
+                    android:id="@+id/et_last_name"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/et_first_name"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/add_name_icon"
+                    android:background="@drawable/input_style"
+                    android:hint="Last name"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#7B8FA1" />
 
-    </com.google.android.material.card.MaterialCardView>
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/contact_number_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/name_section"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#ECF9FF"
-        android:elevation="8dp"
-        app:cardCornerRadius="20dp">
-
-        <RelativeLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/contact_number_section"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name_section"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#ECF9FF"
+            android:elevation="8dp"
+            app:cardCornerRadius="20dp">
 
-            <ImageView
-                android:id="@+id/add_number_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/icon_contact_number" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/et_contact_number"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@+id/add_number_icon"
-                android:background="@drawable/input_style"
-                android:hint="Phone"
-                android:inputType="number"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="#7B8FA1" />
+                <ImageView
+                    android:id="@+id/add_number_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/icon_contact_number" />
 
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <EditText
+                    android:id="@+id/et_contact_number"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/add_number_icon"
+                    android:background="@drawable/input_style"
+                    android:hint="Phone"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#7B8FA1" />
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/email_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/contact_number_section"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#ECF9FF"
-        android:elevation="8dp"
-        app:cardCornerRadius="20dp">
-
-        <RelativeLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/email_section"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contact_number_section"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#ECF9FF"
+            android:elevation="8dp"
+            app:cardCornerRadius="20dp">
 
-            <ImageView
-                android:id="@+id/add_email_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/icon_email" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/et_email"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@+id/add_email_icon"
-                android:background="@drawable/input_style"
-                android:hint="Email"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="#7B8FA1" />
+                <ImageView
+                    android:id="@+id/add_email_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/icon_email" />
 
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/add_email_icon"
+                    android:background="@drawable/input_style"
+                    android:hint="Email"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#7B8FA1" />
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/company_info_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/email_section"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#ECF9FF"
-        android:elevation="8dp"
-        app:cardCornerRadius="20dp">
-
-        <RelativeLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/company_info_section"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/email_section"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#ECF9FF"
+            android:elevation="8dp"
+            app:cardCornerRadius="20dp">
 
-            <ImageView
-                android:id="@+id/add_company_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/icon_company" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/et_company"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@+id/add_company_icon"
-                android:background="@drawable/input_style"
-                android:hint="Company"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="#7B8FA1" />
+                <ImageView
+                    android:id="@+id/add_company_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/icon_company" />
 
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <EditText
+                    android:id="@+id/et_company"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/add_company_icon"
+                    android:background="@drawable/input_style"
+                    android:hint="Company"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#7B8FA1" />
 
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/save_contact_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/company_info_section"
-        android:layout_marginTop="100dp">
+        <Button
+            android:id="@+id/btn_save_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/company_info_section"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="110dp"
+            android:backgroundTint="#03C988"
+            android:text="save" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/btn_save_contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#03C988"
-                android:text="save" />
-
-            <Button
-                android:id="@+id/btn_delete_contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/btn_save_contact"
-                android:backgroundTint="#FF0032"
-                android:text="delete"
-                android:visibility="gone" />
-
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
-</RelativeLayout>
+</ScrollView>
